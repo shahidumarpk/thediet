@@ -20,7 +20,7 @@ class HomeController extends Controller
     public function index()
     { 
         $testimonials = Testimonial::where('status','Active')->get();
-        $questions     = Question::where('status','Active')->get();
+        $questions     = Question::all();
         return view('front.index')->with('testimonials',$testimonials)
                                   ->with('questions',$questions);
     }
@@ -72,7 +72,7 @@ class HomeController extends Controller
 
     public function front_form(Request $request)
     {
-        // dd($request->all());
+         
          $data                = new UserInformation;
          $data->gender        = $request->gender;
          $data->name          = $request->name;
@@ -83,14 +83,19 @@ class HomeController extends Controller
          $data->height        = $request->height;
          $data->status        = 'Active';
         //meal_preparation_time
+
         $meals = $request->meal_preparation_time;
         if (isset($meals) && $meals!='') {
+
             $mealsoption='';
         foreach ($meals as  $meal) {
             if($meal !=''){
                 $mealsfind = QuestionOption::findOrFail($meal);
                 $mealsoption .= $mealsfind->options.',';
             }
+
+
+
         }
 
         $mealsoptionRtrim = rtrim($mealsoption,',');
@@ -101,12 +106,14 @@ class HomeController extends Controller
          //meat_product_include
         $meats = $request->meat_product_include;
         if (isset($meats) && $meats!='') {
+
         $meatsoption='';
         foreach ($meats as  $meat) {
             if($meat !=''){
                 $meatsfind = QuestionOption::findOrFail($meat);
                 $meatsoption .= $meatsfind->options.',';
             }
+
         }
 
         $meatsoptionRtrim = rtrim($meatsoption,',');
@@ -114,27 +121,35 @@ class HomeController extends Controller
         }
          //products_include
         $products = $request->products_include;
+        
         if (isset($products) && $products!='') {
-        $productsoption='';
-        foreach ($products as  $product) {
-            if($product !=''){
-                $productsfind = QuestionOption::findOrFail($product);
-                $productsoption .= $mealsfind->options.',';
-            }
+            
+            $productsoption='';
+            foreach ($products as  $product) {
+                if($product !=''){
+                    $productsfind = QuestionOption::findOrFail($product);
+                    $productsoption .= $mealsfind->options.',';
+                }
+            //print_r($request->all());exit();
+
         }
+       
 
         $productsoptionRtrim = rtrim($productsoption,',');
         $data->products_include        = $productsoptionRtrim; 
         }
+
         //physically_active
         $physically       = $request->physically_active;
         if (isset($physically) && $physically!='') {
         $physicallyfind   = QuestionOption::findOrFail($physically);
         $physicallyoption = $physicallyfind->options;
         $data->physically_active        = $physicallyoption; 
-        
+        }
+
         //familiar_Keto_diet
         $familiar       = $request->familiar_Keto_diet;
+        if (isset($familiar) && $familiar!='') {
         $familiarfind   = QuestionOption::findOrFail($familiar);
         $familiaroption = $familiarfind->options;
         $data->familiar_Keto_diet        = $familiaroption;
@@ -147,13 +162,18 @@ class HomeController extends Controller
         $data->willing_lose_weight        = $willingoption;
         }
         $data->save();
-
-        return redirect()->route('health',$data->id);
+        
+        $success['MESSAGE'] = 'Home Page has been updated';
+        $success['REDIRECT'] = route('health',$data->id);
+        return response()->json($success);
+        //return redirect()->route('health',$data->id);
     }
 
     public function health($id)
     {
-        return view('front.health');
+
+        $data = UserInformation::findOrFail($id);
+        return view('front.health')->with('data',$data);
     }
    
 }

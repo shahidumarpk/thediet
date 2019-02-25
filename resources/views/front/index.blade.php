@@ -37,41 +37,43 @@
                         </div>
                         <div class="col-md-7">
                             <div class="">
+
                                 <table align="center">
                                     <tr>
-                                        <td align="center">
+                                        <td align="center" style="text-align: center;">
                                         <ul class="m-auto only_bigscreen"  id="progressbar" style="text-align: center;">
-                                            @if(isset($questions[0]->category->category_name))
+                                            
+                                            @if(isset($questions[0]->category->category_name) && $questions[0]->status=='Active')
                                             <li class="active">{{$questions[0]->category->category_name}}</li>
                                             @endif
                                              
                                             
                                             <li>PERSONAL</li>
-                                            @if(isset($questions[1]->category->category_name))
+                                            @if(isset($questions[1]->category->category_name) && $questions[1]->status=='Active')
                                             <li>{{$questions[1]->category->category_name}} </li>@endif
-                                            @if(isset($questions[2]->category->category_name))
+                                            @if(isset($questions[2]->category->category_name) && $questions[2]->status=='Active')
                                             <li>{{$questions[2]->category->category_name}} </li>@endif
-                                            @if(isset($questions[3]->category->category_name))
+                                            @if(isset($questions[3]->category->category_name) && $questions[3]->status=='Active')
                                             <li>{{$questions[3]->category->category_name}} </li>@endif
-                                           @if(isset($questions[4]->category->category_name))
+                                           @if(isset($questions[4]->category->category_name) && $questions[4]->status=='Active')
                                             <li>{{$questions[4]->category->category_name}} </li>@endif
-                                            @if(isset($questions[5]->category->category_name))
+                                            @if(isset($questions[5]->category->category_name) && $questions[5]->status=='Active')
                                             <li>{{$questions[5]->category->category_name}} </li>@endif
                                             
-                                            @if(isset($questions[6]->category->category_name))
+                                            @if(isset($questions[6]->category->category_name) && $questions[6]->status=='Active')
                                             <li>{{$questions[6]->category->category_name}} </li>@endif
-                                            @if(isset($questions[7]->category->category_name))
+                                            @if(isset($questions[7]->category->category_name) && $questions[7]->status=='Active')
                                             <li>{{$questions[7]->category->category_name}} </li>@endif
-
                                         </ul>
                                     </td>
+
                                 </tr>
                             </table>
                 </div>
                 <form id="msform" action="{{route('front_form')}}" method="POST">
                     <!-- progressbar -->
                          @csrf
-                         @if(isset($questions[0]->question) && $questions[0]->question_type =='radio')
+                         @if(isset($questions[0]->question) && $questions[0]->question_type =='radio' && $questions[0]->status=='Active')
                         <fieldset>
                             <h2 class="fs-title">@if(isset($questions[0]->question)){{$questions[0]->question}} @endif</h2>
                             <div class="row">
@@ -107,7 +109,7 @@
                            
                     </fieldset>    
                       
-                    @if(isset($questions[1]->question) && $questions[1]->question_type =='radio')
+                    @if(isset($questions[1]->question) && $questions[1]->question_type =='radio' && $questions[1]->status=='Active')
                     <fieldset>
                         <h2 class="fs-title">@if(isset($questions[1]->question)){{$questions[1]->question}} @endif</h2>
                         <div class="fancy-checkbox-holder">
@@ -129,7 +131,7 @@
                     </fieldset>
                     @endif
 
-                    @if(isset($questions[2]->question) && $questions[2]->question_type =='checkbox')
+                    @if(isset($questions[2]->question) && $questions[2]->question_type =='checkbox' && $questions[2]->status=='Active')
                     <fieldset>
                         <h2 class="fs-title">@if(isset($questions[2]->question)){{$questions[2]->question}} @endif</h2>
                         <div class="fancy-checkbox-holder">
@@ -151,7 +153,7 @@
                     </fieldset>
                     @endif
 
-                    @if(isset($questions[3]->question) && $questions[3]->question_type =='checkbox')
+                    @if(isset($questions[3]->question) && $questions[3]->question_type =='checkbox' && $questions[3]->status=='Active')
                     <fieldset>
                         <h2 class="fs-title">@if(isset($questions[3]->question)){{$questions[3]->question}} @endif</h2>
                         <div class="fancy-checkbox-holder">
@@ -173,7 +175,7 @@
                     </fieldset>
                     @endif
 
-                    @if(isset($questions[4]->question) && $questions[4]->question_type =='radio')
+                    @if(isset($questions[4]->question) && $questions[4]->question_type =='radio' && $questions[4]->status=='Active')
                     <fieldset>
                         <h2 class="fs-title">@if(isset($questions[4]->question)){{$questions[4]->question}} @endif</h2>
                         <div class="fancy-radio-holder">
@@ -190,7 +192,7 @@
                         <input type="button" name="next" class="next action-button" value="Next" id="physically_active" />
                     </fieldset>
                     @endif
-                    @if(isset($questions[5]->question)  && $questions[5]->question_type =='radio')
+                    @if(isset($questions[5]->question)  && $questions[5]->question_type =='radio' && $questions[5]->status=='Active')
                     <fieldset>
 
                         <h2 class="fs-title">@if(isset($questions[5]->question)){{$questions[5]->question}} @endif</h2>
@@ -209,7 +211,7 @@
                         <input type="button" name="next" class="next action-button" value="Next" id="familiar_Keto" />
                     </fieldset>
                     @endif
-                    @if(isset($questions[6]->question) && $questions[6]->question_type =='radio')
+                    @if(isset($questions[6]->question) && $questions[6]->question_type =='radio' && $questions[6]->status=='Active')
                     <fieldset>
 
                         <h2 class="fs-title">@if(isset($questions[6]->question)){{$questions[6]->question}} @endif</h2>

@@ -51,22 +51,31 @@ class QuestionController extends Controller
         
        
         ->addColumn('options',function($data){
-            if($data->status=='Active'){
             return "&emsp;<a class='btn btn-success edit_diff_model'
                                      href='#' data-id='".$data->id."'><i class='fa fa-edit'></i></a>
                                      <a class='btn btn-info'
                                      href='".url('question/show',$data->id)."'><i class='fa fa-eye'></i></a>
-                                     <a data-toggle='tooltip' data-placement='bottom' title='Disable' class='btn btn-danger disable' data-original-title='Disable' href='#' data-id='".$data->id."'><i class='fa fa-close'></i></a>
                                      ";
-            }else if($data->status=='Disable'){
-             return "&emsp;<a class='btn btn-success edit_diff_model'
-                                     href='#' data-id='".$data->id."'><i class='fa fa-edit'></i></a>
-                                     <a class='btn btn-info'
-                                     href='".url('question/show',$data->id)."'><i class='fa fa-eye'></i></a>
-                                     <a data-toggle='tooltip' data-placement='bottom' title='Active' class='btn btn-success active' data-original-title='Active' href='#' data-id='".$data->id."'><i class='fa fa-check'></i></a>
-                                     "; 
-            }                         
+                                 
         })
+
+        //  ->addColumn('options',function($data){
+        //     if($data->status=='Active'){
+        //     return "&emsp;<a class='btn btn-success edit_diff_model'
+        //                              href='#' data-id='".$data->id."'><i class='fa fa-edit'></i></a>
+        //                              <a class='btn btn-info'
+        //                              href='".url('question/show',$data->id)."'><i class='fa fa-eye'></i></a>
+        //                              <a data-toggle='tooltip' data-placement='bottom' title='Disable' class='btn btn-danger disable' data-original-title='Disable' href='#' data-id='".$data->id."'><i class='fa fa-close'></i></a>
+        //                              ";
+        //     }else if($data->status=='Disable'){
+        //      return "&emsp;<a class='btn btn-success edit_diff_model'
+        //                              href='#' data-id='".$data->id."'><i class='fa fa-edit'></i></a>
+        //                              <a class='btn btn-info'
+        //                              href='".url('question/show',$data->id)."'><i class='fa fa-eye'></i></a>
+        //                              <a data-toggle='tooltip' data-placement='bottom' title='Active' class='btn btn-success active' data-original-title='Active' href='#' data-id='".$data->id."'><i class='fa fa-check'></i></a>
+        //                              "; 
+        //     }                         
+        // })
         ->rawColumns(['category_id','created_at', 'status','options'])
         ->make(true);
     }
@@ -103,7 +112,7 @@ class QuestionController extends Controller
             $data->category_id = $request->category_id;
             $data->user_id = $user_id;
             $data->question_type = $request->question_type;
-            $data->question_order = $request->question_order;
+            //$data->question_order = $request->question_order;
             $data->status     = $request->status;
             $data->save(); 
             $success = 'Question has been updated.';
@@ -114,7 +123,7 @@ class QuestionController extends Controller
             $data->category_id = $request->category_id;
             $data->user_id = $user_id;
             $data->question_type = $request->question_type;
-            $data->question_order = $request->question_order;
+            //$data->question_order = $request->question_order;
             $data->status     = $request->status;
             $data->save();
 

@@ -48,7 +48,7 @@
                   <th>Question</th>
                   <th>Category</th>
                   <th>Type</th>
-                  <th>Order</th>
+                  <!-- <th>Order</th> -->
                   <th>Created At</th>
                   <th>Status</th>
                   <th width="150px">Action</th>
@@ -115,13 +115,13 @@
                             </span>
                         </div>
 
-                        <div class="form-group">
+                        <!-- <div class="form-group">
                           <label>Question Order</label>
                             <input type="number" class="form-control"  name="question_order" placeholder="Order" autocomplete="off" value="{{ old('question_order') }}" require='require' >
                             <span class="text-red">
                                       <strong class="question_order"></strong>
                             </span>
-                        </div>
+                        </div> -->
 
                         
                         <!--- Question option -->
@@ -225,13 +225,13 @@
                             </span>
                         </div>
 
-                        <div class="form-group">
+                        <!-- <div class="form-group">
                           <label>Question Order</label>
                             <input type="number" class="form-control"  name="question_order" id="edit_question_order" placeholder="Order" autocomplete="off" value="{{ old('question_order') }}" require='require' >
                             <span class="text-red">
                                       <strong class="edit_question_order"></strong>
                             </span>
-                        </div>  
+                        </div> -->  
 
 
 
@@ -303,7 +303,7 @@ var data =[
             { "data": "question" },
             { "data": "category_id" },
             { "data": "question_type" },
-            { "data": "question_order" },
+            // { "data": "question_order" },
             { "data": "created_at" },
             { "data": "status" },
             { "data": "options" ,"orderable":false},

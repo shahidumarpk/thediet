@@ -64,7 +64,7 @@
           <div class="box-body" >
             <div class="row">
               <div class="col-md-12">
-
+                <h4 style="margin-left: 145px;">Header Detail</h4>
                  <div class="form-group">
                     <label class="col-sm-3 control-label">Site Logo</label>
                     <div class="col-sm-9">
@@ -94,6 +94,7 @@
                       </span>
                     </div>
                   </div>
+            <h4 style="margin-left: 145px;">Body Detail</h4>      
                   <div class="form-group">
                     <label class="col-sm-3 control-label">Feedback Title</label>
                     <div class="col-sm-9">
@@ -114,6 +115,7 @@
                       </span>
                     </div>
                   </div>
+            <h4 style="margin-left: 145px;">Footer Detail</h4>       
                   <div class="form-group">
                     <label class="col-sm-3 control-label">Address</label>
                     <div class="col-sm-9">
@@ -142,7 +144,7 @@
                       </span>
                     </div>
                   </div>
-                  
+                  <h4 style="margin-left: 145px;">Pages Detail</h4>
                   <div class="form-group">
                     <label class="col-sm-3 control-label">FAQ Text</label>
                     <div class="col-sm-9">

@@ -2,7 +2,7 @@
         <div class="container">
         <div class="row">
             <div class="col-md-3 footer-brand animated fadeInLeft">
-                <h2 style="color: #71c200;"><img src="{{ asset('public/front/assets/img/logo.png')}}" style="width: 200px;"></h2>
+                <h2 style="color: #71c200;"><img src="{{asset('storage/app/public/page/'.$siteConfig->logo)}}" style="width: 200px;"></h2>
                 <p>© 2019 <a href="http://www.nsol.sg"  style="color: #71c200;"> NSOL</a>, All rights reserved</p>
             </div>
             
@@ -20,11 +20,9 @@
                 
                     <ul class="pages">
                         <li><a href="{{route('faq')}}">F.A.Q</a></li>
-                        <li><a href="#">Access my Plan</a></li>
                         <li><a href="{{route('general_conditions')}}">General Conditions</a></li>
                         <li><a href="{{route('protection_policy')}}">Data protection policy</a></li>
                         <li><a href="{{route('contact_us')}}">Contact Us</a></li>
-                        
                     </ul>
             </div>
             <div class="col-md-4 footer-ns animated fadeInRight">
