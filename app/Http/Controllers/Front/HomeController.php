@@ -84,7 +84,8 @@ class HomeController extends Controller
          $data->status        = 'Active';
         //meal_preparation_time
         $meals = $request->meal_preparation_time;
-        $mealsoption='';
+        if (isset($meals) && $meals!='') {
+            $mealsoption='';
         foreach ($meals as  $meal) {
             if($meal !=''){
                 $mealsfind = QuestionOption::findOrFail($meal);
@@ -94,9 +95,12 @@ class HomeController extends Controller
 
         $mealsoptionRtrim = rtrim($mealsoption,',');
         $data->meal_preparation_time        = $mealsoptionRtrim;
-
+        }
+       
+        
          //meat_product_include
         $meats = $request->meat_product_include;
+        if (isset($meats) && $meats!='') {
         $meatsoption='';
         foreach ($meats as  $meat) {
             if($meat !=''){
@@ -107,9 +111,10 @@ class HomeController extends Controller
 
         $meatsoptionRtrim = rtrim($meatsoption,',');
         $data->meat_product_include        = $meatsoptionRtrim;
-
+        }
          //products_include
         $products = $request->products_include;
+        if (isset($products) && $products!='') {
         $productsoption='';
         foreach ($products as  $product) {
             if($product !=''){
@@ -120,9 +125,10 @@ class HomeController extends Controller
 
         $productsoptionRtrim = rtrim($productsoption,',');
         $data->products_include        = $productsoptionRtrim; 
-
+        }
         //physically_active
         $physically       = $request->physically_active;
+        if (isset($physically) && $physically!='') {
         $physicallyfind   = QuestionOption::findOrFail($physically);
         $physicallyoption = $physicallyfind->options;
         $data->physically_active        = $physicallyoption; 
@@ -132,12 +138,14 @@ class HomeController extends Controller
         $familiarfind   = QuestionOption::findOrFail($familiar);
         $familiaroption = $familiarfind->options;
         $data->familiar_Keto_diet        = $familiaroption;
-
+        }
         //willing_lose_weight
         $willing       = $request->willing_lose_weight;
+        if (isset($willing) && $willing!='') {
         $willingfind   = QuestionOption::findOrFail($willing);
         $willingoption = $willingfind->options;
         $data->willing_lose_weight        = $willingoption;
+        }
         $data->save();
 
         return redirect()->route('health',$data->id);

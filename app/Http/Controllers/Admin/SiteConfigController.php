@@ -66,7 +66,9 @@ class SiteConfigController extends Controller
         $user_id = Auth::user()->id;
 
          
-
+        $general_condition = str_ireplace(array("\r","\n",'\r','\n'),'', $request->general_condition);
+        $protection_policy = str_ireplace(array("\r","\n",'\r','\n'),'', $request->protection_policy);
+        $contact_us = str_ireplace(array("\r","\n",'\r','\n'),'', $request->contact_us);
 
             $data = SiteConfig::findOrFail(1);
             $data->title_1 = $request->title_1;
@@ -77,9 +79,9 @@ class SiteConfigController extends Controller
             $data->phone_1 = $request->phone_1;
             $data->phone_2 = $request->phone_2;
             $data->faq_text = $request->faq_text;
-            $data->general_condition = $request->general_condition;
-            $data->protection_policy = $request->protection_policy;
-            $data->contact_us = $request->contact_us;
+            $data->general_condition = $general_condition;
+            $data->protection_policy = $protection_policy;
+            $data->contact_us = $contact_us;
             $data->user_id = $user_id;
             if($request->hasfile('logo'))
              {
@@ -90,7 +92,7 @@ class SiteConfigController extends Controller
              }
             $data->save(); 
            // $success = 'Home Page has been updated.';
-            $success['MESSAGE'] = 'Home Page has been updated';
+            $success['MESSAGE'] = 'Data saved';
             $success['REDIRECT'] = route('configIndex.index');
             return response()->json($success);
             

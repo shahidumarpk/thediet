@@ -46,7 +46,7 @@ class HomeController extends Controller
             $dates[] = $date->format("Y-m-d");
         }
 
-        return view('admin\home\dashboard');
+        return view('admin.home.dashboard');
         
     }
 }

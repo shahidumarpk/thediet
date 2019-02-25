@@ -17,7 +17,24 @@
         <title>Nutritionist </title>
     @include('front_layouts.include.header')    
 </head>
+<style type="text/css">
+/*custom code stylesheet*/
+.logoClass{
+        position: absolute; top: 50px; z-index: 899; width: 150px; left: 100px
+        }
+    /*media query*/
+@media only screen and (max-width: 768px) {
+   
+    .only_bigscreen{
+      display: none;
+    }
+    .logoClass{
+        position: absolute; top: 10px; z-index: 899; width: 100px; left: 110px
+        }
+    
+ }
 
+</style>
 <body>
 
             <a href="{{url('/')}}" class="classlogo">
