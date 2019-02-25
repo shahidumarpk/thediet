@@ -21,7 +21,7 @@
      Both of these plugins are recommended to enhance the
      user experience. -->
      <!-- page script -->
-@if (\Request::is('admins') or \Request::is('roles')  or \Request::is('projects') or \Request::is('categories') or \Request::is('menu') or \Request::is('customers') or \Request::is('leads') or Route::currentRouteName()=='leads.show' or \Request::is('recordings') or Route::currentRouteName()=="appointments.index" or Route::currentRouteName()=="appointments" or Route::currentRouteName()=="recordings.index" or Route::currentRouteName()=="recordings"  or Route::currentRouteName()=="tasks" or \Request::is('dashboard') or Route::currentRouteName()=='leads.search' or \Request::is('chapters') or \Request::is('topics') or Route::currentRouteName()=="leads.indexmain")  
+@if (\Request::is('admins') or \Request::is('roles')  or \Request::is('projects') or \Request::is('categories') or \Request::is('menu') or \Request::is('customers') or \Request::is('leads') or Route::currentRouteName()=='leads.show' or \Request::is('recordings') or Route::currentRouteName()=="appointments.index" or Route::currentRouteName()=="appointments" or Route::currentRouteName()=="recordings.index" or Route::currentRouteName()=="recordings"  or Route::currentRouteName()=="tasks" or \Request::is('dashboard') or Route::currentRouteName()=='leads.search' or \Request::is('chapters') or \Request::is('topics') or Route::currentRouteName()=="leads.indexmain")
   <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
   <script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
 
@@ -82,8 +82,8 @@
           'info'        : false,
           'autoWidth'   : false
         })
-      }); 
-    </script> 
+      });
+    </script>
 @endif
 @if (Route::currentRouteName()=='admins.show' or Route::currentRouteName()=='customers.show')
 <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
@@ -99,7 +99,7 @@
           'autoWidth'   : true
         })
       });
-    </script> 
+    </script>
 @endif
 
 
@@ -107,10 +107,10 @@
 <script>
   function archiveFunction(formid) {
     event.preventDefault(); // prevent form submit
-      
+
     swal({
             title: "Delete",
-            text: "Are you sure want to delete?", 
+            text: "Are you sure want to delete?",
             icon: "warning",
             buttons: true,
             dangerMode: true,
@@ -118,18 +118,18 @@
         .then((willDelete) => {
           if (willDelete) {
             $('#'+formid).submit();
-          } 
+          }
         });
-      
+
 
     }
-</script>  
+</script>
 @endif
 
-@if (\Request::is('profile') or \Request::is('admins/create') or Route::currentRouteName()=='admins.edit' or \Request::is('categories/create') or Route::currentRouteName()=='categories.edit' or Route::currentRouteName()=='customers.edit'   or \Request::is('customers/create'))
-<script src="{{ asset('js/fileinput.min.js') }}"></script>
+@if (\Request::is('profile') or \Request::is('admins/create') or Route::currentRouteName()=='admins.edit')
+<script src="{{ asset('public/js/fileinput.min.js') }}"></script>
   <script>
-  @if(Route::currentRouteName()=='admins.edit' or \Request::is('profile') or Route::currentRouteName()=='customers.edit')
+  @if(Route::currentRouteName()=='admins.edit' or \Request::is('profile'))
       var avatarName="{{ asset ('img/staff/'.$user->avatar)}}";
     @else
     var avatarName='{{ asset ('img/placeholder.png') }}';
@@ -154,7 +154,7 @@
   });
   </script>
 @endif
-@if (\Request::is('dashboard'))  
+@if (\Request::is('dashboard'))
 <script>
   $(function () {
     $('#nofeaturesproposal').DataTable({
@@ -165,8 +165,8 @@
       'info'        : false,
       'autoWidth'   : false
     })
-  }); 
-</script> 
+  });
+</script>
 @endif
 <script>
 $('a[data-notif-id]').hover(function () {
