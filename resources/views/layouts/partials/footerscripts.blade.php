@@ -130,7 +130,7 @@
 <script src="{{ asset('public/js/fileinput.min.js') }}"></script>
   <script>
   @if(Route::currentRouteName()=='admins.edit' or \Request::is('profile'))
-      var avatarName="{{ asset ('img/staff/'.$user->avatar)}}";
+      var avatarName="{{ asset ('public/img/staff/'.$user->avatar)}}";
     @else
     var avatarName='{{ asset ('img/placeholder.png') }}';
     @endif
