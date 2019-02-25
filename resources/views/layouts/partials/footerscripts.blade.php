@@ -130,9 +130,9 @@
 <script src="{{ asset('public/js/fileinput.min.js') }}"></script>
   <script>
   @if(Route::currentRouteName()=='admins.edit' or \Request::is('profile') or Route::currentRouteName()=='customers.edit')
-      var avatarName="{{ asset ('public/img/staff/'.$user->avatar)}}";
+      var avatarName="{{ asset ('public/public/img/staff/'.$user->avatar)}}";
     @else
-    var avatarName='{{ asset ('public/img/placeholder.png') }}';
+    var avatarName='{{ asset ('public/public/img/placeholder.png') }}';
     @endif
 
   $("#avatar-1").fileinput({
