@@ -34,56 +34,85 @@ var current_fs, next_fs, previous_fs; //fieldsets
 var left, opacity, scale; //fieldset properties which we will animate
 var animating; //flag to prevent quick multi-click glitches
 
-//  $('#gender_btn').click(function () {
-//         if($('input[name="gender"]:checked').length == 0){
-//     return;
-//    }     
-//     });
-// $('#gender_btn').click(function () {
-//         if($('input[name="gender"]:checked').length == 0){
-//     return;
-//    }     
-//     });
+
 
 $(".next").click(function(){
     console.log('hello');
    
-   // if($('input[name="gender"]:checked').length == 0){
-   //  return;
-   // }
-       // var emailEntered = $('#email').val();
-
-       // if(emailEntered==''){
-             
-       //        return false;
-
-       // }  
-
-
-    
-    
+  
     current_fs = $(this).parent();
     console.log(current_fs.context.id); 
     if(current_fs.context.id=='gender_btn'){
           if($('input[name="gender"]:checked').length == 0){
+            $('.error-gender').show();
             return;
+
           }
     }
 
-     if(current_fs.context.id=='personal_btn'){
+    if(current_fs.context.id=='personal_btn'){
           if($('#email').val() =='' || $('#name').val() ==''){
+            $('.error-mail').show();
             return;
+          }else if($('#email').val()!=''){
+             var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            if(!re.test(String($('#email').val()).toLowerCase())){
+                $('.error-validate').show();
+                return;
+            }
           }
     }
 
-    // if(current_fs.context.id=='meal_preparation'){
-    //     console.log($('#meal_preparation_time').val());
-    //      if($('#meal_preparation_time').val() ==''){
-    //         return;
-    //       }
-          
-    // }
+    if(current_fs.context.id=='meal_preparation'){
+    if (!jQuery(".meal_preparation_time").is(":checked")) {
+        $('.error-meal').show();
+        return;
+    }
+   }
 
+   if(current_fs.context.id=='meat_product'){
+    if (!jQuery(".meat_product_include").is(":checked")) {
+        $('.error-meat').show();
+        return;
+    }
+   }
+
+   if(current_fs.context.id=='products_include'){
+    if (!jQuery(".products_include").is(":checked")) {
+        //alert("none checked");
+        //console.log('error');
+        $('.error-products').show();
+        return;
+    }
+   }
+
+   if(current_fs.context.id=='physically_active'){
+      
+      if (!jQuery(".physically_active").is(":checked")) {
+        //alert("none checked");
+        //console.log('error');
+        $('.error-physically').show();
+        return;
+    }
+   }
+  if(current_fs.context.id=='familiar_Keto'){
+      
+      if (!jQuery(".familiar_Keto_diet").is(":checked")) {
+        //alert("none checked");
+        //console.log('error');
+        $('.error-familiar_Keto').show();
+        return;
+    }
+   }  
+  if(current_fs.context.id=='willing_lose'){
+      
+      if (!jQuery(".willing_lose_weight").is(":checked")) {
+        //alert("none checked");
+        //console.log('error');
+        $('.error-willing_lose').show();
+        return;
+    }
+   }   
    
     if(animating) return false;
     animating = true;

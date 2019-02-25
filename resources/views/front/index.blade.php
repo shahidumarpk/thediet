@@ -90,6 +90,7 @@
                                      <input  class="gender" id="male"  type="radio" value="{{$questions[0]->option[1]->options}}" name="gender">
                                  </label>
                             </div>
+                            <div class="error-gender" style="display: none;"><p style="color: red; text-align: center;margin-left: 200px;">Please select an answer</p></div>
                             @endif
                             </div>
                             <input type="button" name="next" class="next action-button" value="Next" id="gender_btn" />
@@ -100,8 +101,10 @@
                             <h2 class="fs-title">Personal Details</h2>
                             <input type="text" name="name" id="name" placeholder="Name"/>
                             <input type="text" id="email" name="email" placeholder="email"/>
+                             <div class="error-email" style="display: none;"><p style="color: red;">Please enter answer</p></div>
+                             <div class="error-mail" style="display: none;"><p style="color: red;">Please enter valid email</p></div>
                             <input type="button" name="next" id="personal_btn" class="next action-button" value="Next"/>
-                            <div class="error-msg" style="display: none;">Please select an answer</div>
+                           
                     </fieldset>    
                       
                     @if(isset($questions[1]->question) && $questions[1]->question_type =='radio')
@@ -109,7 +112,7 @@
                         <h2 class="fs-title">@if(isset($questions[1]->question)){{$questions[1]->question}} @endif</h2>
                         <div class="fancy-checkbox-holder">
                             @foreach($questions[1]->option as $options)
-                            <input type="hidden" id="meal_preparation_time" name="meal_preparation_time[]"  class="answer_12_{{$options->id}}" value="">
+                            <input type="checkbox" id="meal_preparation_time_{{$options->id}}" name="meal_preparation_time[]" class="meal_preparation_time"   value="{{$options->id}}" style="display: none;">
                             <div class="fancy-radio with-icon" id="{{$options->id}}" onclick="answer_1(this.id)" data-value="{{$options->options}}">
                             <div class="icon">
                             <i class="{{$options->options}}"></i>
@@ -120,7 +123,7 @@
                             </div>
                             @endforeach
                            
-                            
+                            <div class="error-meal" style="display: none;"><p style="color: red;">Please select an answer</p></div>
                         </div>
                             <input type="button" name="next" id="meal_preparation" class="next action-button" value="Next"/>
                     </fieldset>
@@ -131,8 +134,8 @@
                         <h2 class="fs-title">@if(isset($questions[2]->question)){{$questions[2]->question}} @endif</h2>
                         <div class="fancy-checkbox-holder">
                             @foreach($questions[2]->option as $options)
-                            <input type="hidden" name="meat_product_include[]" class="answer_4_{{$options->id}}" value="">
-                            <div class="fancy-radio with-icon" id="{{$options->id}}" onclick="answer_4(this.id)" data-answer="{{$options->options}}">
+                            <input type="checkbox" id="meat_product_include_{{$options->id}}" name="meat_product_include[]" class="meat_product_include"   value="{{$options->id}}" style="display: none;">
+                            <div class="fancy-radio with-icon" id="{{$options->id}}" onclick="answer_4(this.id)">
                             <div class="icon">
                             <i class="{{$options->options}}"></i>
                             </div>
@@ -142,9 +145,9 @@
                             </div>
                             @endforeach
                            
-                            
+                            <div class="error-meat" style="display: none;"><p style="color: red;">Please select an answer</p></div>
                         </div>
-                            <input type="button" name="next" class="next action-button" value="Next"/>
+                            <input type="button" name="next" class="next action-button" value="Next" id="meat_product" />
                     </fieldset>
                     @endif
 
@@ -153,8 +156,8 @@
                         <h2 class="fs-title">@if(isset($questions[3]->question)){{$questions[3]->question}} @endif</h2>
                         <div class="fancy-checkbox-holder">
                             @foreach($questions[3]->option as $options)
-                            <input type="hidden" name="products_include[]" class="answer_3_{{$options->id}}" value="">
-                            <div class="fancy-radio with-icon" id="{{$options->id}}" onclick="answer_3(this.id)" data-answer="{{$options->options}}">
+                            <input type="checkbox" id="products_include_{{$options->id}}" name="products_include[]" class="products_include"   value="{{$options->id}}" style="display: none;">
+                            <div class="fancy-radio with-icon" id="{{$options->id}}" onclick="answer_3(this.id)" >
                             <div class="icon">
                             <i class="{{$options->options}}"></i>
                             </div>
@@ -164,9 +167,9 @@
                             </div>
                             @endforeach
                            
-                            
+                             <div class="error-products" style="display: none;"><p style="color: red;">Please select an answer</p></div>
                         </div>
-                            <input type="button" name="next" class="next action-button" value="Next"/>
+                            <input type="button" name="next" class="next action-button" value="Next" id="products_include" />
                     </fieldset>
                     @endif
 
@@ -175,16 +178,16 @@
                         <h2 class="fs-title">@if(isset($questions[4]->question)){{$questions[4]->question}} @endif</h2>
                         <div class="fancy-radio-holder">
                             @foreach($questions[4]->option as $options)
-                            <input type="hidden" name="physically_active" value="" class="answer_5">
+                            <input type="radio" id="physically_active_{{$options->id}}" name="physically_active" class="physically_active"   value="{{$options->id}}" style="display: none;">
                             <div class="fancy-radio" id="{{$options->id}}" onclick="answer_5(this.id)">
                             {{$options->options}}
                             <div class="status"></div>
                             <div class="status-icon">+</div>
                             </div>
                              @endforeach
-                           
+                            <div class="error-physically" style="display: none;"><p style="color: red;">Please select an answer</p></div>
                         </div>
-                        <input type="button" name="next" class="next action-button" value="Next"/>
+                        <input type="button" name="next" class="next action-button" value="Next" id="physically_active" />
                     </fieldset>
                     @endif
                     @if(isset($questions[5]->question)  && $questions[5]->question_type =='radio')
@@ -193,16 +196,17 @@
                         <h2 class="fs-title">@if(isset($questions[5]->question)){{$questions[5]->question}} @endif</h2>
                         <div class="fancy-radio-holder">
                             @foreach($questions[5]->option as $options)
-                            <input type="hidden" name="familiar_Keto_diet" value="" class="answer_6">
+                            
+                            <input type="radio" id="familiar_Keto_diet_{{$options->id}}" name="familiar_Keto_diet" class="familiar_Keto_diet"   value="{{$options->id}}" style="display: none;">
                             <div class="fancy-radio" id="{{$options->id}}" onclick="answer_6(this.id)">
                             {{$options->options}}
                             <div class="status"></div>
                             <div class="status-icon">+</div>
                             </div>
                              @endforeach
-                           
+                            <div class="error-familiar_Keto" style="display: none;"><p style="color: red;">Please select an answer</p></div>
                         </div>
-                        <input type="button" name="next" class="next action-button" value="Next"/>
+                        <input type="button" name="next" class="next action-button" value="Next" id="familiar_Keto" />
                     </fieldset>
                     @endif
                     @if(isset($questions[6]->question) && $questions[6]->question_type =='radio')
@@ -211,16 +215,17 @@
                         <h2 class="fs-title">@if(isset($questions[6]->question)){{$questions[6]->question}} @endif</h2>
                         <div class="fancy-radio-holder">
                             @foreach($questions[6]->option as $options)
-                            <input type="hidden" name="willing_lose_weight" value="" class="answer_7">
+                            
+                            <input type="radio" id="willing_lose_weight_{{$options->id}}" name="willing_lose_weight" class="willing_lose_weight"   value="{{$options->id}}" style="display: none;">
                             <div class="fancy-radio" id="{{$options->id}}" onclick="answer_7(this.id)">
                             {{$options->options}}
                             <div class="status"></div>
                             <div class="status-icon">+</div>
                             </div>
                              @endforeach
-                           
+                           <div class="error-willing_lose" style="display: none;"><p style="color: red;">Please select an answer</p></div>
                         </div>
-                        <input type="button" name="next" class="next action-button" value="Next"/>
+                        <input type="button" name="next" class="next action-button" value="Next" id="willing_lose" />
                     </fieldset>
                     @endif
                     
@@ -249,7 +254,7 @@
                             <div class="units weight">lb</div>
                             </div>
                             
-                            <div class="error-msg" style="display: none;">Please select an answer</div>
+                            <div class="error-msg" style="display: none;"><p style="color: red;">Please enter answer</p></div>
                             
                             </div>
                             <!-- <a  class="action-button" style="padding: 13px 28px;" href="health.html">Submit</a> -->
@@ -307,74 +312,86 @@
              
   <script type="text/javascript">
 function answer_1(id){
-    
-   var present =  $('.answer_12_'+id).val();
-   if(present==''){
-      $('.answer_12_'+id).val(id);
-   }else{
 
-    $('.answer_12_'+id).val('');
-   }
+$('#meal_preparation_time_'+id).prop("checked", !$('#meal_preparation_time_'+id).prop("checked"));
+}
+function answer_3(id){
+
+$('#products_include_'+id).prop("checked", !$('#products_include_'+id).prop("checked"));
    
 }
-function answer_3(value){
-
-   var present =  $('.answer_3_'+value).val();
-   if(present==''){
-      $('.answer_3_'+value).val(value);
-   }else{
-
-    $('.answer_3_'+value).val('');
-   }
-    //alert(value);
-    //$('.answer_3_'+value).val(value);
-}
-function answer_4(value){
+function answer_4(id){
    
- var present =  $('.answer_4_'+value).val();
-   if(present==''){
-      $('.answer_4_'+value).val(value);
-   }else{
-
-    $('.answer_4_'+value).val('');
-   }
-    //alert(value);
-    //$('.answer_4_'+value).val(value);
+$('#meat_product_include_'+id).prop("checked", !$('#meat_product_include_'+id).prop("checked"));
 }
-function answer_5(value){
+function answer_5(id){
 
-    //alert(value);
-    $('.answer_5').val(value);
+$('#physically_active_'+id).prop("checked", !$('#physically_active_'+id).prop("checked"));
+
 }
-function answer_6(value){
+function answer_6(id){
 
-    //alert(value);
-    $('.answer_6').val(value);
+$('#familiar_Keto_diet_'+id).prop("checked", !$('#familiar_Keto_diet_'+id).prop("checked"));
 }
 
-function answer_7(value){
+function answer_7(id){
 
-    //alert(value);
-    $('.answer_7').val(value);
+$('#willing_lose_weight_'+id).prop("checked", !$('#willing_lose_weight_'+id).prop("checked"));}
+
+
+$(document).ready(function () {
+
+$('#submmit').click(function (e) {
+  e.preventDefault();
+var age = $('#age-value').val();
+var height = $('#height-value').val();
+var weight = $('#weight-value').val();
+var targetWeight = $('#targetWeight-value').val();
+
+if(age=='' || height=='' || weight=='' || targetWeight=='' ){
+    $('.error-msg').show();
+      return;
+
 }
+  var data = $('#msform')[0];
+  var formData = new FormData(data);
+  $.ajax({
+  data: formData,
+  type: $('#msform').attr('method'),
+  url: $('#msform').attr('action'),
+  processData: false,
+  contentType: false,
+  success: function(response)
+  {
+  // if(response.errors)
+  // {
+  // $.each(response.errors, function( index, value ) {
+  //   $("."+index).html(value);
+  //   $("."+index).fadeIn('slow', function(){
+  //     $("."+index).delay(3000).fadeOut(); 
+  //   });
+  // });
+
+  // }
+ if(response.REDIRECT)
+  {
+        
+  $('.success').html(response.MESSAGE);
+  $('#success').show();
+    window.setTimeout(function()
+    {
+    location.href = response.REDIRECT;
+    }, 2000);
+  }
+  
+  }
+  });      
+
+});
 
 
-   $(document).ready(function () {
 
-    // $('#personal_btn').click(function () {
-    //     alert('dfsdf');
-    //    var emailEntered = $('#email').val();
 
-    //    if(emailEntered==''){
-    //          alert(emailEntered);
-    //           window.currentStep -= 1;
-    //           $(this).html("Next");
-    //           $('.error-msg').html('Please enter  email address').fadeIn();
-    //           return false;
-
-    //    }       
-    // })
-
-   });           
+});           
  </script> 
  @endsection
