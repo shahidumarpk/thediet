@@ -69,34 +69,52 @@
               <table class="table table-striped table-bordered responsive nowrap">
                 <tr>
                     <td><b>ID</b></td>
-                    <td>{{$data['question']->id}}</td>
+                    <td>{{$data['userInformation']->id}}</td>
                 </tr>
                 <tr>
-                    <td><b>Question</b></td>
-                    <td>{{$data['question']->question}}</td>
+                    <td><b>Name</b></td>
+                    <td>{{$data['userInformation']->name}}</td>
                 </tr>
                 <tr>
-                    <td><b>Question Type</b></td>
-                    <td>{{$data['question']->question_type}}</td>
+                    <td><b>E-mail</b></td>
+                    <td>{{$data['userInformation']->email}}</td>
                 </tr>
                 <tr>
-                    <td><b>Question Order</b></td>
-                    <td>{{$data['question']->question_order}}</td>
+                    <td><b>Gender</b></td>
+                    <td>{{$data['userInformation']->gender}}</td>
+                </tr>
+
+                <tr>
+                    <td><b>Age</b></td>
+                    <td>{{$data['userInformation']->age}}</td>
+                </tr>
+                
+                <tr>
+                    <td><b>Weight</b></td>
+                    <td>{{$data['userInformation']->weight}}</td>
+                </tr>
+                <tr>
+                    <td><b>Target Weight</b></td>
+                    <td>{{$data['userInformation']->target_weight}}</td>
+                </tr>
+                <tr>
+                    <td><b>Height</b></td>
+                    <td>{{$data['userInformation']->height}}</td>
                 </tr>
                
                 <tr>
                     <td><b>Created At</b></td>
-                    <td>{{$data['question']->created_at->format('d-m-Y')}}</td>
+                    <td>{{$data['userInformation']->created_at->format('d-m-Y')}}</td>
                 </tr>
                 <tr>
                     <td><b>Updated At</b></td>
-                    <td>{{$data['question']->updated_at->format('d-m-Y')}}</td>
+                    <td>{{$data['userInformation']->updated_at->format('d-m-Y')}}</td>
                 </tr>
                 <tr>
                     <td><b>Status</b></td>
                     <td>
                         
-                          <span class="text-green"><b>{{$data['question']->status}}</b></span>
+                          <span class="text-green"><b>{{$data['userInformation']->status}}</b></span>
                         
 <!--                             <span class="text-red"><b>Deactive</b></span>
  -->                       
@@ -123,13 +141,8 @@
         <div class="col-xs-12">
           <div class="box">
             <div class="box-header">
-              <h3 class="box-title">Options</h3>
-              @if($data['question']->id!='1')
-              <span class="pull-right">
-                <a href="#" class="btn btn-info btnAdd"><span class="fa fa-plus"></span> Add </a>
-              </span>
-              @endif
-              
+              <h3 class="box-title">Questions & Answers</h3>
+             
             </div>
             <!-- /.box-header -->
              <div class="box-body">
@@ -138,8 +151,8 @@
                 <thead>
                 <tr>
                   <th>ID</th>
-                  <th>options</th>
-                  <th>Status</th>
+                  <th>Question</th>
+                  <th>Answers</th>
                   <th>Action</th>
                 </tr>
                 </thead>
@@ -160,7 +173,7 @@
 
 
 
-
+{{--
 <!--Modal -->
   <div class="modal fade" id="myModal" role="dialog">
     <div class="modal-dialog modal-md">
@@ -209,7 +222,7 @@
     </div>
   </div>
 <!--Update Modal end-->
-
+--}}
 
 
 </div>
@@ -231,15 +244,16 @@ var InitTable = function(){
       "processing":true,
       "serverSide":true,
       "ajax":{
-               "url": "{{ route('question.optionFetch') }}",
+               "url": "{{ route('userInformation.answerFetch') }}",
                "dataType": "json",
                "type": "POST",
-               "data":{ _token: "{{csrf_token()}}",id:"{{$data['question']->id}}"}
+               "data":{ _token: "{{csrf_token()}}",id:"{{$data['userInformation']->id}}"}
              },
       "columns": [
                 { "data": "id" },
-                { "data": "options" },
-                { "data": "status" },
+                { "data": "question_id" },
+                { "data": "answer_id" },
+                // { "data": "status" },
                 { "data": "option" },
             ]
     });
@@ -248,72 +262,72 @@ var InitTable = function(){
 
   InitTable();
 // code for add form modal show
-$(document).on('click', '.btnAdd', function()
-{
-    $('#myModal').modal('show');
-    $('#option_form')[0].reset();  
-});
+// $(document).on('click', '.btnAdd', function()
+// {
+//     $('#myModal').modal('show');
+//     $('#option_form')[0].reset();  
+// });
 
 
 
 // code for add form
-$('#option-update').on('click', function(e) {
+// $('#option-update').on('click', function(e) {
 
-  var data = $('#option_form').serializeArray();
+//   var data = $('#option_form').serializeArray();
   
-  event.preventDefault();
-  $.ajax({
-          data: data,
-          type: $('#option_form').attr('method'),
-          url: $('#option_form').attr('action'),
-          success: function(response)
-          {
+//   event.preventDefault();
+//   $.ajax({
+//           data: data,
+//           type: $('#option_form').attr('method'),
+//           url: $('#option_form').attr('action'),
+//           success: function(response)
+//           {
             
-            if(response.errors)
-            {
-              $(".options").html(response.errors.attribute_name);
-              $('.options').fadeIn('slow', function(){
-                $('.options').delay(3000).fadeOut(); 
-              });
+//             if(response.errors)
+//             {
+//               $(".options").html(response.errors.attribute_name);
+//               $('.options').fadeIn('slow', function(){
+//                 $('.options').delay(3000).fadeOut(); 
+//               });
               
              
               
-            }
-            else
-            {
-              $('#myModal').modal('hide');
-              $('.success').html(response);
-              $('#success').show();
-              $('#option_form')[0].reset();
-              InitTable();
+//             }
+//             else
+//             {
+//               $('#myModal').modal('hide');
+//               $('.success').html(response);
+//               $('#success').show();
+//               $('#option_form')[0].reset();
+//               InitTable();
 
               
              
               
-            }
-          }
-        });
-}); 
+//             }
+//           }
+//         });
+// }); 
 
- $(document).on('click', '.edit', function()
-{
+//  $(document).on('click', '.edit', function()
+// {
 
-    var id = $(this).attr('data-id');
-    $.ajax({
-        "url": "{{route('question.optionEdit')}}",
-        type: "POST",
-        data: {'id': id,_token: '{{csrf_token()}}'},
-        dataType : "json",
-        success: function(data)
-        {
-          $('#edit_id').val(data.id);
-          $('#options').val(data.options);
-          $('#status').val(data.status);
-          $('#myModal').modal('show');
-        },
-          error: function(){},          
-      });
-});
+//     var id = $(this).attr('data-id');
+//     $.ajax({
+//         "url": "{{route('question.optionEdit')}}",
+//         type: "POST",
+//         data: {'id': id,_token: '{{csrf_token()}}'},
+//         dataType : "json",
+//         success: function(data)
+//         {
+//           $('#edit_id').val(data.id);
+//           $('#options').val(data.options);
+//           $('#status').val(data.status);
+//           $('#myModal').modal('show');
+//         },
+//           error: function(){},          
+//       });
+// });
 
 
 

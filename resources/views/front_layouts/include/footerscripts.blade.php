@@ -41,7 +41,7 @@ $(".next").click(function(){
    
   
     current_fs = $(this).parent();
-    console.log(current_fs.context.id); 
+
     if(current_fs.context.id=='gender_btn'){
           if($('input[name="gender"]:checked').length == 0){
             $('.error-gender').show();
@@ -63,56 +63,14 @@ $(".next").click(function(){
           }
     }
 
-    if(current_fs.context.id=='meal_preparation'){
-    if (!jQuery(".meal_preparation_time").is(":checked")) {
-        $('.error-meal').show();
+    if(current_fs.context.id!='gender_btn' && current_fs.context.id!='personal_btn'){
+    if (!jQuery(".option_"+current_fs.context.id).is(":checked")) {
+        $('.error_next_'+current_fs.context.id).show();
         return;
     }
    }
 
-   if(current_fs.context.id=='meat_product'){
-    if (!jQuery(".meat_product_include").is(":checked")) {
-        $('.error-meat').show();
-        return;
-    }
-   }
-
-   if(current_fs.context.id=='products_include'){
-    if (!jQuery(".products_include").is(":checked")) {
-        //alert("none checked");
-        //console.log('error');
-        $('.error-products').show();
-        return;
-    }
-   }
-
-   if(current_fs.context.id=='physically_active'){
-      
-      if (!jQuery(".physically_active").is(":checked")) {
-        //alert("none checked");
-        //console.log('error');
-        $('.error-physically').show();
-        return;
-    }
-   }
-  if(current_fs.context.id=='familiar_Keto'){
-      
-      if (!jQuery(".familiar_Keto_diet").is(":checked")) {
-        //alert("none checked");
-        //console.log('error');
-        $('.error-familiar_Keto').show();
-        return;
-    }
-   }  
-  if(current_fs.context.id=='willing_lose'){
-      
-      if (!jQuery(".willing_lose_weight").is(":checked")) {
-        //alert("none checked");
-        //console.log('error');
-        $('.error-willing_lose').show();
-        return;
-    }
-   }   
+   
    
     if(animating) return false;
     animating = true;

@@ -49,26 +49,26 @@ $user = Auth::user();
           @endif--}}
         </ul>
       </li>
-
-
+      
+      
       <!-- User Account Menu -->
       <li class="dropdown user user-menu">
         <!-- Menu Toggle Button -->
         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
           <!-- The user image in the navbar-->
-          <img src="{{asset('public/public/img/staff/'.$user->avatar)}}" class="user-image" alt="User Image">
+          <img src="{{asset('public/img/staff/'.$user->avatar)}}" class="user-image" alt="User Image">
           <!-- hidden-xs hides the username on small devices so only the image appears. -->
           <span class="hidden-xs">{{$user->fname}} {{$user->lname}}</span>
         </a>
         <ul class="dropdown-menu">
           <!-- The user image in the menu -->
           <li class="user-header">
-            <img src="{{ asset('public/public/img/staff/'.$user->avatar)}}" class="img-circle" alt="User Image">
+            <img src="{{ asset('public/img/staff/'.$user->avatar)}}" class="img-circle" alt="User Image">
             <p>
               {{$user->fname}} {{$user->lname}}
               <small>Member since {{$user->created_at->format('M, Y')}}</small>
              {{-- <small>Last login at {{auth()->user()->lastLoginAt() !="" ? auth()->user()->lastLoginAt()->diffForHumans() : "NA"}}</small>--}}
-
+              
             </p>
           </li>
           <li class="user-footer">
@@ -85,11 +85,11 @@ $user = Auth::user();
                   @csrf
               </form>
             </div>
-
+            
           </li>
         </ul>
       </li>
-
+      
     </ul>
   </div>
 </nav>

@@ -14,7 +14,7 @@ $permissions=explode(",",$user->role->permission);
   <!-- Sidebar user panel (optional) -->
   <div class="user-panel">
     <div class="pull-left image">
-      <img src="{{ asset('public/public/img/staff/'.$user->avatar) }}" class="img-circle" alt="User Image">
+      <img src="{{ asset('public/img/staff/'.$user->avatar) }}" class="img-circle" alt="User Image">
     </div>
     <div class="pull-left info">
       <p>{{$user->fname}} {{$user->lname}}</p>
@@ -45,7 +45,7 @@ $permissions=explode(",",$user->role->permission);
                   @endforeach
                   </ul>
                 @endif
-            </li>
+            </li> 
           @endif
 
         @else
@@ -53,10 +53,10 @@ $permissions=explode(",",$user->role->permission);
             <li  class="{{ strpos($nav->mselect,$urlpath)  !== false ? "active" : "" }}"><a href="{!! url($nav->urllink); !!}"><i class="{{ $nav->iconclass  }}"></i> <span>{{ $nav->menutitle  }}</span></a></li>
           @endif
         @endif
-
+        
       @endforeach
 
-
+  
     @endif
     <li>
           <a href="{{ route('logout') }}"

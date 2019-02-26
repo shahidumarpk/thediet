@@ -31,9 +31,27 @@ class AuthServiceProvider extends ServiceProvider
         $this->testimonial();
         $this->configIndex();
         $this->category();
+        $this->userInformation();
        // Passport::routes();
 
         //
+    }
+
+     //category
+    public function userInformation(){
+        
+        Gate::define('userInformation-index', function($user){
+            return $user->hasAccess(['userInformation-index']);
+        });
+
+        Gate::define('userInformation-fetch', function($user){
+            return $user->hasAccess(['userInformation-fetch']);
+        });
+
+        Gate::define('userInformation-show', function($user){
+            return $user->hasAccess(['userInformation-show']);
+        });
+       
     }
 
      //category
@@ -64,7 +82,6 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('category-disable', function($user){
             return $user->hasAccess(['category-disable']);
         });
-
     }
      //configIndex
     public function configIndex(){

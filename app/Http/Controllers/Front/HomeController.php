@@ -8,6 +8,7 @@ use App\Testimonial;
 use App\Question;
 use App\UserInformation;
 use App\QuestionOption;
+use App\QuestionAnswer;
 
 
 class HomeController extends Controller
@@ -20,9 +21,11 @@ class HomeController extends Controller
     public function index()
     { 
         $testimonials = Testimonial::where('status','Active')->get();
-        $questions     = Question::all();
+        $questions     = Question::where('editedable','1')->get();
+        $fixQuestions     = Question::where('editedable','0')->get();
         return view('front.index')->with('testimonials',$testimonials)
-                                  ->with('questions',$questions);
+                                  ->with('questions',$questions)
+                                  ->with('fixQuestions',$fixQuestions);
     }
 
     /**
@@ -72,7 +75,7 @@ class HomeController extends Controller
 
     public function front_form(Request $request)
     {
-         
+       //print_r($request->all());exit(); 
          $data                = new UserInformation;
          $data->gender        = $request->gender;
          $data->name          = $request->name;
@@ -82,86 +85,41 @@ class HomeController extends Controller
          $data->target_weight = $request->target_weight;
          $data->height        = $request->height;
          $data->status        = 'Active';
+         $data->save();
         //meal_preparation_time
+       foreach ($request->all() as $key => $value) {
+          if($key!='gender' && $key!='name' && $key!='email' && $key!='age' && $key!='weight' && $key!='target_weight' && $key!='height' && $key!='_token'){
 
-        $meals = $request->meal_preparation_time;
-        if (isset($meals) && $meals!='') {
-
-            $mealsoption='';
-        foreach ($meals as  $meal) {
-            if($meal !=''){
-                $mealsfind = QuestionOption::findOrFail($meal);
-                $mealsoption .= $mealsfind->options.',';
-            }
-
-
-
-        }
-
-        $mealsoptionRtrim = rtrim($mealsoption,',');
-        $data->meal_preparation_time        = $mealsoptionRtrim;
-        }
-       
-        
-         //meat_product_include
-        $meats = $request->meat_product_include;
-        if (isset($meats) && $meats!='') {
-
-        $meatsoption='';
-        foreach ($meats as  $meat) {
-            if($meat !=''){
-                $meatsfind = QuestionOption::findOrFail($meat);
-                $meatsoption .= $meatsfind->options.',';
-            }
-
-        }
-
-        $meatsoptionRtrim = rtrim($meatsoption,',');
-        $data->meat_product_include        = $meatsoptionRtrim;
-        }
-         //products_include
-        $products = $request->products_include;
-        
-        if (isset($products) && $products!='') {
+            $question = explode("_", $key);
+            //$questions = $question[0];
+            $checking = $question[1];
+            if(isset($question[2])){
+              $questionId = $question[2];  
+              }else{
+                $questionId = ''; 
+              }
+            $ans =   new  QuestionAnswer;
             
-            $productsoption='';
-            foreach ($products as  $product) {
-                if($product !=''){
-                    $productsfind = QuestionOption::findOrFail($product);
-                    $productsoption .= $mealsfind->options.',';
-                }
-            //print_r($request->all());exit();
+            $ans->user_infomation_id = $data->id;
+            
+            if($checking=='radio'){
+                $ans->question_id = $questionId;
+                $ans->answer_id = $value;
+            }
 
-        }
+            if($checking=='checkbox'){
+                
+                $ans->question_id = $questionId;
+                $checkbox = implode(",", $value);
+                $ans->answer_id = $checkbox;
+            }
+
+            $ans->save();
+            
+          }
+
+       }
        
-
-        $productsoptionRtrim = rtrim($productsoption,',');
-        $data->products_include        = $productsoptionRtrim; 
-        }
-
-        //physically_active
-        $physically       = $request->physically_active;
-        if (isset($physically) && $physically!='') {
-        $physicallyfind   = QuestionOption::findOrFail($physically);
-        $physicallyoption = $physicallyfind->options;
-        $data->physically_active        = $physicallyoption; 
-        }
-
-        //familiar_Keto_diet
-        $familiar       = $request->familiar_Keto_diet;
-        if (isset($familiar) && $familiar!='') {
-        $familiarfind   = QuestionOption::findOrFail($familiar);
-        $familiaroption = $familiarfind->options;
-        $data->familiar_Keto_diet        = $familiaroption;
-        }
-        //willing_lose_weight
-        $willing       = $request->willing_lose_weight;
-        if (isset($willing) && $willing!='') {
-        $willingfind   = QuestionOption::findOrFail($willing);
-        $willingoption = $willingfind->options;
-        $data->willing_lose_weight        = $willingoption;
-        }
-        $data->save();
         
         $success['MESSAGE'] = 'Home Page has been updated';
         $success['REDIRECT'] = route('health',$data->id);

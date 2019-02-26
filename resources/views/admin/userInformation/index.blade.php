@@ -24,9 +24,9 @@
         <div class="col-xs-12">
           <div class="box">
             <div class="box-header">
-              <h3 class="box-title"> Question </h3>
+              <h3 class="box-title"> User Information </h3>
               <span class="pull-right">
-                <a href="#" class="btn btn-info addModelbtn" id="#addModel"><span class="fa fa-plus"></span> Add Question</a>
+                
                 
               </span>
             </div>
@@ -45,10 +45,13 @@
                 <thead>
                 <tr>
                   <th>ID</th>
-                  <th>Question</th>
-                  <th>Category</th>
-                  <th>Type</th>
-                  <!-- <th>Order</th> -->
+                  <th>Name</th>
+                  <th>E-mail</th>
+                  <th>Gender</th>
+                  <th>Age</th>
+                  <th>Weight</th>
+                  <th>Target Weight</th>
+                  <th>Height</th>
                   <th>Created At</th>
                   <th>Status</th>
                   <th width="150px">Action</th>
@@ -66,7 +69,7 @@
         <!-- /.col -->
 </div>
 <!-- Table end -->
-
+{{--
 <!--add Modal -->
   <div class="modal fade" id="addModel" role="dialog">
     <div class="modal-dialog modal-md">
@@ -260,50 +263,29 @@
     </div>
   </div>
 <!--Update Modal end-->
-      <!-- /.row --> 
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular.min.js"></script>
+--}}
+
 <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
 <script src="{{ asset('public/diet/app.js')}}" type="text/javascript"></script>
 <script type="text/javascript">
 
-var app = angular.module("nomanAngular",[],function($interpolateProvider) {
-        $interpolateProvider.startSymbol('<%');
-        $interpolateProvider.endSymbol('%>');
-    });
 
-app.controller("MyCtrl" , function($scope){
-  
-   $scope.data ={
-       names:[{ name:""}]
-   };
-  
-  $scope.addRow = function(index){
-    var name = {name:""};
-       if($scope.data.names.length <= index+1){
-            $scope.data.names.splice(index+1,0,name);
-        }
-    };
-  
-  $scope.deleteRow = function($event,name){
-  var index = $scope.data.names.indexOf(name);
-    if($event.which == 1)
-       $scope.data.names.splice(index,1);
-    }
-  
-  });
 
-var dataTableRoute = "{{ route('question.fetch') }}";
-var editRoute = "{{route('question.edit')}}";
-var activeRoute = "{{route('question.active')}}";
-var disableRoute = "{{route('question.disable')}}";
+var dataTableRoute = "{{ route('userInformation.fetch') }}";
+var editRoute = "";
+var activeRoute = "";
+var disableRoute = "";
 var token = '{{csrf_token()}}';
 var data =[
             { "data": "id" },
-            { "data": "question" },
-            { "data": "category_id" },
-            { "data": "question_type" },
-            // { "data": "question_order" },
+            { "data": "name" },
+            { "data": "email" },
+            { "data": "gender" },
+            { "data": "age" },
+            { "data": "weight" },
+            { "data": "target_weight" },
+            { "data": "height" },
             { "data": "created_at" },
             { "data": "status" },
             { "data": "options" ,"orderable":false},
@@ -312,12 +294,12 @@ $( document ).ready(function() {
   InitTable();
 });
 
-$('#edit_diff_btn').click(function() {
+// $('#edit_diff_btn').click(function() {
      
 
-     EditDifferentModel('#edit_diff_form','#edit_diff_model');
+//      EditDifferentModel('#edit_diff_form','#edit_diff_model');
 
-});
+// });
 
 
 </script>

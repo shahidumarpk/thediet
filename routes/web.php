@@ -89,6 +89,12 @@ Route::post('testimonial/disable', 'Admin\TestimonialController@testimonialDisab
 Route::get('/configIndex', 'Admin\SiteConfigController@index')->middleware('can:configIndex-index')->name('configIndex.index');
 Route::post('/configIndex/store', 'Admin\SiteConfigController@store')->middleware('can:configIndex-store')->name('configIndex.store');
 
+// userInformation
+Route::get('/userInformation', 'Admin\UserInformationController@index')->middleware('can:userInformation-index')->name('userInformation.index');
+Route::get('/userInformation/fetch', 'Admin\UserInformationController@fetch')->middleware('can:userInformation-fetch')->name('userInformation.fetch');
+Route::get('/userInformation/show/{show}', 'Admin\UserInformationController@show')->middleware('can:userInformation-show')->name('userInformation.show');
+Route::post('/userInformation/answerFetch', 'Admin\UserInformationController@answerFetch')->middleware('auth')->name('userInformation.answerFetch');
+
 ////////////////////// Front Routes /////////////////////////////
 
 Route::get('/', 'Front\HomeController@index')->name('front.home');
