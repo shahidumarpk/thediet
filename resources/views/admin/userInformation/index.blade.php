@@ -24,9 +24,9 @@
         <div class="col-xs-12">
           <div class="box">
             <div class="box-header">
-              <h3 class="box-title"> User Information </h3>
+              <h3 class="box-title"> Servey Record </h3>
               <span class="pull-right">
-                
+                <button class="btn btn-primary" id="btnExport" onclick="fnExcelReport();"><li class="fa fa-file-excel-o fa-lg"></li></button>
                 
               </span>
             </div>
@@ -40,8 +40,9 @@
                     <div class="alert alert-success alert-styled-left" style="display: none;" id="success">
                          <button type="button" class="close" data-dismiss="alert"><span>×</span><span class="sr-only">Close</span></button>
                          <p class="success"></p>
-                    </div> 
-              <table id="table_data" class="table table-striped table-bordered display" style="width:100%">
+                    </div>
+              <div class="table-responsive">       
+              <table id="" class="table table-striped table-bordered display nowrap responsive" style="width:100%">
                 <thead>
                 <tr>
                   <th>ID</th>
@@ -52,15 +53,77 @@
                   <th>Weight</th>
                   <th>Target Weight</th>
                   <th>Height</th>
+                   <th>Status</th>
+                  
+                  @foreach($data['question'] as $row)
+                  <th style="width: 200px;" class="nowrap">{{$row->question}}</th>
+                  @endforeach
                   <th>Created At</th>
-                  <th>Status</th>
-                  <th width="150px">Action</th>
                   
                 </tr>
                 </thead>
-                
+                <?php
+                $countquestion  = count($data['question']);
+                ?>
+                <tbody>
+                  @foreach($data['userInformation'] as $row)
+                  <tr>
+                    <td>{{$row->id}}</td>
+                    <td>{{$row->name}}</td>
+                    <td>{{$row->email}}</td>
+                    <td>{{$row->gender}}</td>
+                    <td>{{$row->age}}</td>
+                    <td>{{$row->weight}}</td>
+                    <td>{{$row->target_weight}}</td>
+                    <td>{{$row->height}}</td>
+                    <td>{{$row->status}}</td>
+                    <?php
+                    //$id = array_column($data['userInformation'][1]->questionAnswer->toarray(), 'question_id');
+                    
+                    // $result=array_diff($data['questionId'],$id);
+                    ?>
+
+                    @foreach($row->questionAnswer as $answer)
+                     <td style="">{{$answer->answer->options}} 
+
+                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                     <?php 
+                              // if ($answer,$answer->question_id)
+                              //     {
+                              //     echo '<td>'.$answer->answer->options.'</td>';
+                              //     }
+                              //   else
+                              //     {
+                              //     echo "<td></td>";
+                              //     }
+                     ?>
+                    
+                    @endforeach
+                    <?php 
+                           // $countAnswer = count($row->questionAnswer);
+                           //  print_r($countAnswer);//exit();
+                           
+                           // print_r($countquestion);//exit();
+                           // //$i = $countAnswer;
+                           
+                            
+                          
+                           //  for($countAnswer; $countAnswer<$countquestion; $countAnswer++){
+                           //    if($countAnswer < $countquestion){
+                           //      echo  '<td>'.$countAnswer.'<td>';
+                           //    }
+                           //  }
+                           
+                            
+                     ?>
+                    
+                    <td>{{$row->created_at}}</td>
+                  </tr>
+                  @endforeach
+                </tbody>
               </table>
-              
+              </div>
+              {{ $data['userInformation']->links() }}
             </div>
             <!-- /.box-body -->
           </div>
@@ -69,238 +132,31 @@
         <!-- /.col -->
 </div>
 <!-- Table end -->
-{{--
-<!--add Modal -->
-  <div class="modal fade" id="addModel" role="dialog">
-    <div class="modal-dialog modal-md">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Question Form</h4>
-        </div>
-        <div class="modal-body">
-          
-          <form action="{{route('question.store')}}" class="form" id="add_form" method="POST">
-               @csrf   
-                <div class="modal-body" id="modalbody">
-                        <div class="form-group">
-                            <label>Category Name</label>
-                            <select type="text" name="category_id"  class="form-control" required="required">
-                              <option value="">Choose Category</option>
-                              @foreach($categories as $row)
-                              <option value="{{$row->id}}">{{$row->category_name}}</option>
-                              @endforeach
-                            </select>
-                            <span class="text-red">
-                              <strong class="category_id"></strong>
-                            </span>
-                        </div>   
-                         <div class="form-group">
-                          <label>Question</label>
-                            <textarea type="text" class="form-control" name="question" placeholder="Description" autocomplete="off" value="{{ old('question') }}" style="height: 100px;" require >
-                            </textarea>
-                            <span class="text-red">
-                                      <strong class="question"></strong>
-                            </span>
-                        </div>
-                       
-                        <div class="form-group">
-                            <label>Question Type</label>
-                            <select type="text" name="question_type"  class="form-control" required="required">
-                              <option value="">Choose Option</option>
-                              <option value="checkbox">checkbox</option>
-                              <option value="radio">radio</option>
-                              <!-- <option value="text">text</option>
-                              <option value="dropdown">dropdown</option> -->
-                            </select>
-                            <span class="text-red">
-                              <strong class="question_type"></strong>
-                            </span>
-                        </div>
-
-                        <!-- <div class="form-group">
-                          <label>Question Order</label>
-                            <input type="number" class="form-control"  name="question_order" placeholder="Order" autocomplete="off" value="{{ old('question_order') }}" require='require' >
-                            <span class="text-red">
-                                      <strong class="question_order"></strong>
-                            </span>
-                        </div> -->
-
-                        
-                        <!--- Question option -->
-                        <div class="form-group">
-                          <label>Options</label>
-                            <div ng-app="app" ng-controller="MyCtrl">
-                             <table  class="table table-striped table-bordered">
-                               <thead>
-                                  
-                                  <tr>
-                                      <th>Options</th>
-                                      <th>Action</th>
-                                  </tr>
-                                </thead>
-                                <tbody>
-                                 <tr ng-repeat="name in data.names track by $index">
-                                     <td> <input type="text" ng-model="data.names1[$index].name" name="options[]" required="required"  style="width:100%;"></td>
-                                    <td> <a ng-click="addRow($index)"  ng-show="$last"><i class="fa fa-plus"></i></a>
-                                        <a ng-click="deleteRow($event,name)"  ng-show="$index != 0"><i class="fa fa-close"></i></a>
-                                    </td>
-                                  </tr>
-                                </tbody>
-                              </table>
-                            </div>   
-                        </div>  
-                        <!--- Question option -->
-                        
-
-
-
-                        <div class="form-group">
-                            <label>Status</label>
-                            <select type="text" name="status"  class="form-control" required="required">
-                              <option value="Active">Active</option>
-                              <option value="Disable">Disable</option>
-                            </select>
-                            <span class="text-red">
-                              <strong class="status"></strong>
-                            </span>
-                        </div> 
-<!--                         <input type="hidden" name="edit_id" id="edit_id" value="">
- -->                        
-                </div>
-        </div>
-        <div class="modal-footer">
-          <input type="submit" class="btn btn-primary" id="add_form_btn" value="Save">
-          <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-      </form>
-    </div>
-  </div>
-<!--add Modal end-->
-
-<!--Modal -->
-   <div class="modal fade" id="edit_diff_model" role="dialog">
-    <div class="modal-dialog modal-md">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Question Form</h4>
-        </div>
-        <div class="modal-body">
-          
-          <form action="{{route('question.store')}}" class="form" id="edit_diff_form" method="POST">
-               @csrf   
-                <div class="modal-body" id="modalbody">
-                    
-                   <div class="form-group">
-                            <label>Category Name</label>
-                            <select type="text" name="category_id" id="edit_category_id"  class="form-control" required="required">
-                              <option value="">Choose Category</option>
-                              @foreach($categories as $row)
-                              <option value="{{$row->id}}">{{$row->category_name}}</option>
-                              @endforeach
-                            </select>
-                            <span class="text-red">
-                              <strong class="edit_category_id"></strong>
-                            </span>
-                        </div>   
-                         <div class="form-group">
-                          <label>Question</label>
-                            <textarea type="text" class="form-control" id="edit_question" name="question" placeholder="Description" autocomplete="off" value="{{ old('question') }}" require style="height: 100px;">
-                            </textarea>
-                            <span class="text-red">
-                                      <strong class="edit_question"></strong>
-                            </span>
-                        </div>
-                       
-                        <div class="form-group">
-                            <label>Question Type</label>
-                            <select type="text" name="question_type" id="edit_question_type"  class="form-control" required="required">
-                              <option value="">Choose Option</option>
-                              <option value="checkbox">checkbox</option>
-                              <option value="radio">radio</option>
-                              <!-- <option value="text">text</option>
-                              <option value="dropdown">dropdown</option> -->
-                            </select>
-                            <span class="text-red">
-                              <strong class="edit_question_type"></strong>
-                            </span>
-                        </div>
-
-                        <!-- <div class="form-group">
-                          <label>Question Order</label>
-                            <input type="number" class="form-control"  name="question_order" id="edit_question_order" placeholder="Order" autocomplete="off" value="{{ old('question_order') }}" require='require' >
-                            <span class="text-red">
-                                      <strong class="edit_question_order"></strong>
-                            </span>
-                        </div> -->  
-
-
-
-                        <div class="form-group">
-                            <label>Status</label>
-                            <select type="text" name="status" id="edit_status" class="form-control" required="required">
-                              <option value="Active">Active</option>
-                              <option value="Disable">Disable</option>
-                            </select>
-                            <span class="text-red">
-                              <strong class="edit_status"></strong>
-                            </span>
-                        </div> 
-
-
-                        <input type="hidden" name="edit_id" id="edit_id" value="">
-                       
-                </div>
-        </div>
-        <div class="modal-footer">
-          <input type="submit" class="btn btn-primary" id="edit_diff_btn" value="Save">
-          <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-      </form>
-    </div>
-  </div>
-<!--Update Modal end-->
---}}
 
 <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
-<script src="{{ asset('public/diet/app.js')}}" type="text/javascript"></script>
+<script type="text/javascript" src="{{asset('public/js/FileSaver.js')}}"></script> 
+<script type="text/javascript" src="{{asset('public/js/tableExport.js')}}"></script>
+
+
 <script type="text/javascript">
 
+$(document).ready(function() {
+    $('.table_data').DataTable( {
+        //"scrollY": 200,
+        "scrollX": true
+    } );
 
-
-var dataTableRoute = "{{ route('userInformation.fetch') }}";
-var editRoute = "";
-var activeRoute = "";
-var disableRoute = "";
-var token = '{{csrf_token()}}';
-var data =[
-            { "data": "id" },
-            { "data": "name" },
-            { "data": "email" },
-            { "data": "gender" },
-            { "data": "age" },
-            { "data": "weight" },
-            { "data": "target_weight" },
-            { "data": "height" },
-            { "data": "created_at" },
-            { "data": "status" },
-            { "data": "options" ,"orderable":false},
-          ]
-$( document ).ready(function() {
-  InitTable();
 });
 
-// $('#edit_diff_btn').click(function() {
-     
-
-//      EditDifferentModel('#edit_diff_form','#edit_diff_model');
-
-// });
-
-
+function fnExcelReport() 
+{ 
+  //$(".loading").fadeIn();
+ $("table").tableExport({
+  headings: false, 
+  type:'excel'
+}); 
+ //$(".loading").fadeOut();
+ }
 </script>
 @endsection

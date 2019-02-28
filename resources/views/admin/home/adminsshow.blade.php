@@ -5,7 +5,7 @@
       $( document ).ready(function() {
         swal("Success", "{{session('success')}}", "success");
       });
-
+      
     </script>
 @endif
 <!-- some CSS styling changes and overrides -->
@@ -40,9 +40,9 @@
             <div class="row">
               <div class="col-md-4 text-center">
                   <div class="kv-avatar">
-                          <img src="{{ asset('public/public/img/staff/'.$user->avatar) }}" width="90%">
+                          <img src="{{ asset('public/img/staff/'.$user->avatar) }}" width="90%">
                   </div>
-              </div>
+              </div> 
               <div class="col-md-8">
               <table class="table table-striped">
                 <tr>
@@ -83,9 +83,9 @@
                         @endif
                     </td>
                 </tr>
-
+                
               </table>
-
+                  
 
               </div>
               </div>
@@ -126,7 +126,7 @@
                     <td>{{$loginlog->ip_address}}</td>
                     <td>{{$loginlog->user_agent}}</td>
                   </tr>
-                  @endforeach
+                  @endforeach			  
                 </tbody>
                 <tfoot>
                 </tfoot>

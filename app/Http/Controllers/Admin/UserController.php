@@ -73,7 +73,7 @@ class UserController extends Controller
          {
             $file = $request->file('avatar-1');
             $avatarname=time().$file->getClientOriginalName();
-            $file->move(public_path().'/public/img/staff', $avatarname);
+            $file->move(public_path().'/img/staff', $avatarname);
          }else{
             $avatarname="default_avatar_male.jpg";
          }
@@ -218,12 +218,14 @@ class UserController extends Controller
             )->with('success', 'Password has been reset.');
         }else{
         //Update Staff/User details
+           // dd($request->file('avatar-1'));
             $this->authorize('edit-staff');
             if($request->hasfile('avatar-1'))
             {
                 $file = $request->file('avatar-1');
                 $avatarname=time().$file->getClientOriginalName();
-                $file->move(public_path().'/public/img/staff', $avatarname);
+                // dd($avatarname);
+                $file->move(public_path().'/img/staff', $avatarname);
             }
 
             $user = User::find($id); 

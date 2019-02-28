@@ -22,13 +22,10 @@ class UserInformationController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
-        $data['question'] = Question::where('status','Active')->where('editedable','1')->get();
-        $data['questionId'] = Question::where('status','Active')->where('editedable','1')->pluck('id')->toArray();
-        $data['userInformation'] = UserInformation::where('status','Active')->paginate(15);
-                            
-        return view('admin.userInformation.index')->with('data',$data);
+      // $categories = Category::where('status','Active')->get();
+        return view('admin.userInformation.index');
     }
 
    
@@ -172,7 +169,6 @@ class UserInformationController extends Controller
        ->addColumn('answer_id',function($data){
             return $data->answer->options;
         })
-       // /questionAnswer
         // ->addColumn('status',function($data){
         //   if($data->status=='Disable') {
         //     return '<span class="label label-danger">Disable</span>';

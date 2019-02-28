@@ -13,8 +13,6 @@ class UserInformation extends Model
         'updated_at'
     ];
     
-   public function questionAnswer(){
-        return $this->hasMany( 'App\QuestionAnswer', 'user_infomation_id', 'id' );
-    }
+   
 
 }

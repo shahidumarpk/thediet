@@ -11,6 +11,10 @@ use DateInterval;
 use Calendar;
 use Carbon\Carbon;
 use App\Http\Controllers\Controller;
+use App\Question;
+use App\UserInformation;
+use App\QuestionOption;
+use App\QuestionAnswer;
 
 
 class HomeController extends Controller
@@ -46,7 +50,11 @@ class HomeController extends Controller
             $dates[] = $date->format("Y-m-d");
         }
 
-        return view('admin.home.dashboard');
+        $data['question'] = Question::where('status','Active')->where('editedable','1')->get();
+        $data['questionId'] = Question::where('status','Active')->where('editedable','1')->pluck('id')->toArray();
+        $data['userInformation'] = UserInformation::where('status','Active')->paginate(15);
+
+        return view('admin.home.dashboard')->with('data',$data);
         
     }
 }
