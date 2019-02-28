@@ -17,7 +17,40 @@
     </script>
 @endif
 
+<div class="row">
+  <div class="col-md-12">
+    <div class="box box-success collapsed-box">
+      <div class="box-header with-border">
+        <h3 class="box-title">Advance Search</h3>
 
+        <div class="box-tools pull-right">
+          <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="" data-original-title="Collapse">
+            <i class="fa fa-minus"></i></button>
+          
+        </div>
+      </div>
+      <div class="box-body" style="">
+       <form id="" method="GET" action="{{route('userInformation.index')}}">
+          <div class="row col-md-12">
+              <div class="form-group col-md-6">
+                  <label>Gender</label>
+                    <select type="text" name="gender"   class="form-control select2" style="width: 100%">
+                       <option value="">Choose Option</option>
+                       <option value="Male">Male</option>
+                       <option value="Female">Female</option>
+                         
+                    </select>
+              </div>
+              
+          </div>
+          <button class="btn btn-primary pull-right" type="submit">Search</button>
+          <a href="{{route('userInformation.index')}}" class="btn btn-primary pull-right" style="margin-right:20px;" id="">Clear</a>
+        </form>
+      </div>
+      
+  </div>
+</div>
+</div>
 
 <!-- Table start -->
 <div class="row">

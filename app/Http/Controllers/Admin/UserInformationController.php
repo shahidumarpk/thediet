@@ -24,9 +24,23 @@ class UserInformationController extends Controller
      */
     public function index(Request $request)
     {
+        if(isset($request->gender) && $request->gender!='')
+        {
+        
         $data['question'] = Question::where('status','Active')->where('editedable','1')->get();
         $data['questionId'] = Question::where('status','Active')->where('editedable','1')->pluck('id')->toArray();
-        $data['userInformation'] = UserInformation::where('status','Active')->paginate(15);
+        $data['userInformation'] = UserInformation::where('status','Active')->where('gender',$request->gender)->paginate(15);
+
+        }
+        else
+        {
+        
+        $data['question'] = Question::where('status','Active')->where('editedable','1')->get();
+        $data['questionId'] = Question::where('status','Active')->where('editedable','1')->pluck('id')->toArray();
+        $data['userInformation'] = UserInformation::where('status','Active')->paginate(15); 
+
+        }
+        
                             
         return view('admin.userInformation.index')->with('data',$data);
     }
