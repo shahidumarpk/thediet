@@ -69,6 +69,7 @@ class UserController extends Controller
             'avatar-1' => ['mimes:jpeg,png']
         ]);
 
+
         if($request->hasfile('avatar-1'))
          {
             $file = $request->file('avatar-1');
@@ -85,7 +86,6 @@ class UserController extends Controller
         $user->role_id=$request->get('role_id');
         $user->password=Hash::make($request->get('password'));
         $user->phonenumber=$request->get('phonenumber');
-        $user->isGoOnAppoints=($request->get('isGoOnAppoints')) ? 1: 0;
         $date=date_create($request->get('date'));
         $format = date_format($date,"Y-m-d");
         $user->created_at = strtotime($format);
@@ -244,7 +244,6 @@ class UserController extends Controller
                 $user->role_id=$request->get('role_id');
             }
             $user->phonenumber=$request->get('phonenumber');
-            $user->isGoOnAppoints=($request->get('isGoOnAppoints')) ? 1: 0;
             if(!$request->get('profile')){
             $user->status=$request->get('status');
             }

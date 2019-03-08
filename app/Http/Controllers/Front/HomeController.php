@@ -80,15 +80,31 @@ class HomeController extends Controller
          $data->gender        = $request->gender;
          $data->name          = $request->name;
          $data->email         = $request->email;
-         $data->age           = $request->age;
-         $data->weight        = $request->weight;
-         $data->target_weight = $request->target_weight;
-         $data->height        = $request->height;
+         if($request->check=='Imperial'){
+         $data->age           = $request->imperial_age;
+         $data->weight        = $request->imperial_weight;
+         $data->weight_type = 'lb';
+         $data->target_weight        = $request->imperial_target_weight;
+         $data->target_weight_type        = 'lb';
+         $data->height_ft        = $request->imperial_height_ft;
+         $data->height_inc        = $request->imperial_height_in;
+         //$data->height_cm        = $request->height;
+         }elseif($request->check=='Metric'){
+          $data->age           = $request->metric_age;
+         $data->weight        = $request->metric_weight;
+         $data->weight_type = 'kg';
+         $data->target_weight        = $request->metric_target_weight;
+         $data->target_weight_type        = 'kg';
+         //$data->height_ft        = $request->imperial_height_ft;
+         //$data->height_inc        = $request->imperial_height_in;
+         $data->height_cm        = $request->metric_height;
+         }
+         
          $data->status        = 'Active';
          $data->save();
         //meal_preparation_time
        foreach ($request->all() as $key => $value) {
-          if($key!='gender' && $key!='name' && $key!='email' && $key!='age' && $key!='weight' && $key!='target_weight' && $key!='height' && $key!='_token'){
+          if($key!='gender' && $key!='name' && $key!='email' && $key!='imperial_age' && $key!='imperial_weight' && $key!='imperial_target_weight' && $key!='imperial_height_ft' && $key!='imperial_height_in' && $key!='metric_age' && $key!='metric_weight' && $key!='metric_target_weight' && $key!='metric_height' && $key!='check' && $key!='_token'){
 
             $question = explode("_", $key);
             //$questions = $question[0];

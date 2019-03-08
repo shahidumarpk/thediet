@@ -106,9 +106,13 @@
                     <td>{{$row->email}}</td>
                     <td>{{$row->gender}}</td>
                     <td>{{$row->age}}</td>
-                    <td>{{$row->weight}}</td>
-                    <td>{{$row->target_weight}}</td>
-                    <td>{{$row->height}}</td>
+                    <td>{{$row->weight}} {{$row->weight_type}}</td>
+                    <td>{{$row->target_weight}} {{$row->target_weight_type}}</td>
+                    @if($row->height_cm!='' && $row->height_ft=='' && $row->height_inc=='')
+                    <td>{{$row->height_cm}} cm</td>
+                    @elseif($row->height_cm=='' && $row->height_ft!='' && $row->height_inc!='')
+                    <td>{{$row->height_ft}} ft {{$row->height_inc}} inc</td>
+                    @endif
                     <td>{{$row->status}}</td>
                     <?php
                     //$id = array_column($data['userInformation'][1]->questionAnswer->toarray(), 'question_id');
@@ -117,9 +121,21 @@
                     ?>
 
                     @foreach($row->questionAnswer as $answer)
-                     <td style="">{{$answer->answer->options}} 
+                     <?php 
+                         $answerId = $answer->answer_id;
+                         $answerIdexp = explode(",",$answerId);
+                         $optionCombine='';
+                         foreach ($answerIdexp as  $value) {
+                           $option = App\QuestionOption::findOrFail($value);
+                           $optionCombine .= $option->options.',';
+                  
+                         }
+                          $rtrimoptionCombine = rtrim($optionCombine,","); 
+                     ?>
+                     <td>{{$rtrimoptionCombine}} 
 
                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                     
                      <?php 
                               // if ($answer,$answer->question_id)
                               //     {
@@ -170,7 +186,8 @@
 <script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
 <script type="text/javascript" src="{{asset('public/js/FileSaver.js')}}"></script> 
 <script type="text/javascript" src="{{asset('public/js/tableExport.js')}}"></script>
-
+<link href="{{ asset('public/bower_components/select2/dist/css/select2.min.css') }}" rel="stylesheet">
+  <script src="{{ asset('public/bower_components/select2/dist/js/select2.full.min.js') }}"></script>
 
 <script type="text/javascript">
 
@@ -191,5 +208,9 @@ function fnExcelReport()
 }); 
  //$(".loading").fadeOut();
  }
+
+ $('.select2').select2({
+      multiple: false,
+  }); 
 </script>
 @endsection

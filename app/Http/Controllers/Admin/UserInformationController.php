@@ -29,7 +29,7 @@ class UserInformationController extends Controller
         
         $data['question'] = Question::where('status','Active')->where('editedable','1')->get();
         $data['questionId'] = Question::where('status','Active')->where('editedable','1')->pluck('id')->toArray();
-        $data['userInformation'] = UserInformation::where('status','Active')->where('gender',$request->gender)->paginate(15);
+        $data['userInformation'] = UserInformation::where('status','Active')->where('gender',$request->gender)->paginate(30);
 
         }
         else
@@ -37,7 +37,7 @@ class UserInformationController extends Controller
         
         $data['question'] = Question::where('status','Active')->where('editedable','1')->get();
         $data['questionId'] = Question::where('status','Active')->where('editedable','1')->pluck('id')->toArray();
-        $data['userInformation'] = UserInformation::where('status','Active')->paginate(15); 
+        $data['userInformation'] = UserInformation::where('status','Active')->paginate(30); 
 
         }
         

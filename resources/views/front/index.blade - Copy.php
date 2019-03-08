@@ -153,63 +153,51 @@
                 
                     <fieldset>
                         <div id="step-7" class="step active" style="display: block; " data-type="units_question" data-mode="question">
-                            <div class="center" style="text-align: center">
-                                <div  id="Imperial" onclick="measur(this.id)" class="action-button"  style="width:48%; float:left;padding: 13px 28px;">
-                                Imperial
-                                </div>
-                                <div   id="Metric" onclick="measur(this.id)" class="action-buttons" style="width:48%; float:left;padding: 13px 28px;">
-                                Metric
-                                </div>
-                            </div>
+                            <a  id="Imperial" onclick="measur(this.id)" class="action-button"  style="padding: 13px 28px;">
+                            Imperial
+                            </a>
+                            <a   id="Metric" onclick="measur(this.id)" class="action-button" style="padding: 13px 28px;">
+                            Metric
+                            </a>
                             <h2 class="fs-title">MEASUREMENTS</h2>
 
                             <div class="">
                               <div class="Imperial">
                                 <div class="input-holder">
-                                <input id="imperial_age" type="number" name="imperial_age" placeholder="Age">
+                                <input id="age-value" type="number" name="age" placeholder="Age">
                                 <div class="units age">years</div>
                                 </div>
-                                <div class="row" style="">
-                                <div class="col-xs-6" style="margin-left:13px;">
                                 <div class="input-holder">
-                                <input id="imperial_height_ft" type="number" name="imperial_height_ft" placeholder="ft" style="width:234px;">
-                                <div class="units height">ft</div>
-                                </div>
-                                </div>
-                                <div class="col-xs-6" style="margin-right:13px;margin-left: 42px;">
-                                <div class="input-holder">
-                                 <input id="imperial_height_in" type="number" name="imperial_height_in" placeholder="In" style="width:234px;">
+                                <input id="height-value" type="number" name="height" placeholder="Height">
                                 <div class="units height">In</div>
                                 </div>
-                                </div>
-                                </div>
                                 <div class="input-holder">
-                                <input id="imperial_weight" type="number" name="imperial_weight" placeholder="Weight">
+                                <input id="weight-value" type="number" name="weight" placeholder="Weight">
                                 <div class="units weight">lb</div>
                                 </div>
                                 <div class="input-holder">
-                                <input id="imperial_target_weight" type="number" name="imperial_target_weight" placeholder="Target weight">
+                                <input id="targetWeight-value" type="number" name="target_weight" placeholder="Target weight">
                                 <div class="units weight">lb</div>
                                 </div>
                               </div>
                               
-                              <input type="hidden" id="check" name="check" value="Imperial">
+
                               <div class="Metric" style="display: none;">
                                 <div class="input-holder">
-                                <input id="metric_age" type="number" name="metric_age" placeholder="Age">
+                                <input id="age-value" type="number" name="age" placeholder="Age">
                                 <div class="units age">years</div>
                                 </div>
                                 <div class="input-holder">
-                                <input id="metric_height" type="number" name="metric_height" placeholder="Height">
-                                <div class="units height">cm</div>
+                                <input id="height-value" type="number" name="height" placeholder="Heightdfsdfdsf">
+                                <div class="units height">In</div>
                                 </div>
                                 <div class="input-holder">
-                                <input id="metric_weight" type="number" name="metric_weight" placeholder="Weight">
-                                <div class="units weight">kg</div>
+                                <input id="weight-value" type="number" name="weight" placeholder="Weight">
+                                <div class="units weight">lb</div>
                                 </div>
                                 <div class="input-holder">
-                                <input id="metric_target_weight" type="number" name="metric_target_weight" placeholder="Target weight">
-                                <div class="units weight">kg</div>
+                                <input id="targetWeight-value" type="number" name="target_weight" placeholder="Target weight">
+                                <div class="units weight">lb</div>
                                 </div>
                               </div>
 
@@ -265,20 +253,6 @@
                     </div>
                 </div>  
             </section>
- <style type="text/css">
-      .action-buttons {
-    width: 100px;
-    background: #252525;
-    font-weight: bold;
-    color: white;
-    border: 0 none;
-    border-radius: 25px;
-    cursor: pointer;
-    padding: 10px 5px;
-    margin: 10px 5px;
-}
-67bc00
- </style>           
             <!-- End testomial Area -->  
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
              
@@ -294,32 +268,14 @@ $('#option_'+id).prop("checked", !$('#option_'+id).prop("checked"));
 }
 
 function measur(id) {
-    
+    preventDefault();
     if(id=='Imperial'){
-       $('#check').val('Imperial');
-       $('#metric_age').val('');
-       $('#metric_height').val('');
-       $('#metric_weight').val('');
-       $('#metric_target_weight').val('');
        $('.Imperial').show();
        $('.Metric').hide();
-       $('#Metric').addClass('action-buttons');
-       $('#Metric').removeClass('action-button');
-       $('#Imperial').addClass('action-button');
-       $('#Imperial').removeClass("action-buttons");
     }else if(id=='Metric'){
-       $('#check').val('Metric');
-       $('#imperial_age').val('');
-       $('#imperial_height_ft').val('');
-       $('#imperial_height_in').val('');
-       $('#imperial_weight').val('');
-       $('#imperial_target_weight').val('');
+
        $('.Imperial').hide();
        $('.Metric').show();
-       $('#Imperial').addClass('action-buttons');
-       $('#Imperial').removeClass('action-button');
-       $('#Metric').addClass('action-button');
-       $('#Metric').removeClass("action-buttons");
     }
 }
 
@@ -327,40 +283,16 @@ $(document).ready(function () {
 
 $('#submmit').click(function (e) {
   e.preventDefault();
- 
+var age = $('#age-value').val();
+var height = $('#height-value').val();
+var weight = $('#weight-value').val();
+var targetWeight = $('#targetWeight-value').val();
 
-var metric_age            =  $('#metric_age').val();
-var metric_height         =  $('#metric_height').val();
-var metric_weight         = $('#metric_weight').val();
-var metric_target_weight  = $('#metric_target_weight').val();
-
-
-var imperial_age           =  $('#imperial_age').val();
-var imperial_height_ft     =  $('#imperial_height_ft').val();
-var imperial_height_in     = $('#imperial_height_in').val();
-var imperial_weight        = $('#imperial_weight').val();
-var imperial_target_weight = $('#imperial_target_weight').val();
-
-var check = $('#check').val(); 
-
-if (check =='Imperial'){
-
-if(imperial_age=='' || imperial_height_ft=='' || imperial_height_in=='' || imperial_weight=='' || imperial_target_weight=='' ){
+if(age=='' || height=='' || weight=='' || targetWeight=='' ){
     $('.error-msg').show();
       return;
 
 }
-
-}else if(check =='Metric'){
-
-if(metric_age=='' || metric_height=='' || metric_weight=='' || metric_target_weight==''){
-    $('.error-msg').show();
-      return;
-
-}
-
-}
-
   var data = $('#msform')[0];
   var formData = new FormData(data);
   $.ajax({

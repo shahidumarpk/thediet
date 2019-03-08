@@ -20,6 +20,7 @@
 
 
  $user = Auth::user();
+
 ?>
 
 
@@ -79,14 +80,29 @@
                     <td>{{$row->email}}</td>
                     <td>{{$row->gender}}</td>
                     <td>{{$row->age}}</td>
-                    <td>{{$row->weight}}</td>
-                    <td>{{$row->target_weight}}</td>
-                    <td>{{$row->height}}</td>
+                    <td>{{$row->weight}} {{$row->weight_type}}</td>
+                    <td>{{$row->target_weight}} {{$row->target_weight_type}}</td>
+                    @if($row->height_cm!='' && $row->height_ft=='' && $row->height_inc=='')
+                    <td>{{$row->height_cm}} cm</td>
+                    @elseif($row->height_cm=='' && $row->height_ft!='' && $row->height_inc!='')
+                    <td>{{$row->height_ft}} ft {{$row->height_inc}} inc</td>
+                    @endif
                     <td>{{$row->status}}</td>
                     
 
                     @foreach($row->questionAnswer as $answer)
-                     <td>{{$answer->answer->options}}
+                     <?php 
+                         $answerId = $answer->answer_id;
+                         $answerIdexp = explode(",",$answerId);
+                         $optionCombine='';
+                         foreach ($answerIdexp as  $value) {
+                           $option = App\QuestionOption::findOrFail($value);
+                           $optionCombine .= $option->options.',';
+                  
+                         }
+                          $rtrimoptionCombine = rtrim($optionCombine,","); 
+                     ?>
+                     <td>{{$rtrimoptionCombine}}
                       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     </td>
                     

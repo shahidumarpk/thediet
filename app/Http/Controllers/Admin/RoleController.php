@@ -156,7 +156,7 @@ class RoleController extends Controller
         $role->updated_at = strtotime($format);
         $role->save();
         return redirect()->action(
-            'Amim\RoleController@index'
+            'Admin\RoleController@index'
         )->with('success', 'Navigation Role status has been deactivated for '.$role->role_title.'.');
     }
     //For Active
